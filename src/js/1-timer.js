@@ -13,7 +13,7 @@ const remainingSeconds = document.querySelector('span[data-seconds]');
 buttonTime.dataset.start = 'start-btn';
 buttonTime.disabled = true;
 
-let userSelectedDate;
+let userSelectedDate ="";
 
 const options = {
   enableTime: true,
@@ -21,10 +21,9 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    userSelectedDate = selectedDates[0];
-    if (userSelectedDate < options.defaultDate) {
-      buttonTime.disabled = true;
-
+    const timeNow = Date.now();
+    if (selectedDates[0] < timeNow) {
+      buttonTime.setAttribute("disabled", "");
       iziToast.error({
         title: 'Error',
         message: 'Please choose a date in the future',
@@ -32,15 +31,17 @@ const options = {
         titleColor: '#fff',
       });
     } else {
-      buttonTime.disabled = false;
+      userSelectedDate = selectedDates[0];
+      buttonTime.removeAttribute("disabled", "");
       buttonTime.style.backgroundColor = "#4E75FF";
       buttonTime.style.color = "#FFFFFF";
-      timer;
+
     }
   }
 }
 
-inputDateTime.addEventListener("input",  flatpickr("#datetime-picker", { options }));
+
+inputDateTime.addEventListener("input", flatpickr("#datetime-picker", { options}));
 
 
 const timer = {
