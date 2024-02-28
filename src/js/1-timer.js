@@ -41,8 +41,6 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
-inputDateTime.addEventListener("click", flatpickr)
-
 const timer = {
   start() {
     buttonTime.setAttribute("disabled", '');   
