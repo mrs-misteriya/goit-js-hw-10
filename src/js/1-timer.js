@@ -13,7 +13,7 @@ const remainingSeconds = document.querySelector('span[data-seconds]');
 buttonTime.dataset.start = 'start-btn';
 buttonTime.disabled = true;
 
-let userSelectedDate ="";
+let userSelectedDate = "";
 
 const options = {
   enableTime: true,
@@ -21,35 +21,34 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    const timeNow = Date.now();
-    if (selectedDates[0] < timeNow) {
-      buttonTime.setAttribute("disabled", "");
+    if (selectedDates[0] > options.defaultDate) {
+      userSelectedDate = selectedDates[0];
+      buttonTime.disabled = false;
+      buttonTime.style.backgroundColor = "#4E75FF";
+      buttonTime.style.color = "#FFFFFF";
+    }
+    else {
+      buttonTime.disabled = true;
       iziToast.error({
         title: 'Error',
         message: 'Please choose a date in the future',
         backgroundColor: '#ef4040',
         titleColor: '#fff',
-      });
-    } else {
-      userSelectedDate = selectedDates[0];
-      buttonTime.removeAttribute("disabled", "");
-      buttonTime.style.backgroundColor = "#4E75FF";
-      buttonTime.style.color = "#FFFFFF";
-
+      })
     }
   }
 }
 
+flatpickr('#datetime-picker', options);
 
-inputDateTime.addEventListener("input", flatpickr("#datetime-picker", { options}));
-
+inputDateTime.addEventListener("click", flatpickr)
 
 const timer = {
   start() {
-    buttonTime.disabled = true;
-    inputDateTime.removeEventListener("input", flatpickr("#datetime-picker", { options }));
-    
-
+    buttonTime.setAttribute("disabled", '');   
+    buttonTime.style.backgroundColor = "#ef4040";
+    buttonTime.style.color = "#fff";
+    inputDateTime.disabled = true;
     const id = setInterval(() => {
       const currentDate = new Date();
       const difference = userSelectedDate.getTime() - currentDate.getTime();
@@ -92,12 +91,11 @@ function convertMs(ms) {
 };
     
 
-buttonTime.addEventListener('click',  timer.start());
-
-
-
-
+buttonTime.addEventListener('click', timer.start);
 
 console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
 console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
 console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+
+
+ 
