@@ -44,7 +44,7 @@ flatpickr('#datetime-picker', options);
 const timer = {
   start() {
     buttonTime.setAttribute("disabled", '');   
-    buttonTime.style.backgroundColor = "#ef4040";
+    buttonTime.style.backgroundColor = "#989898";
     buttonTime.style.color = "#fff";
     inputDateTime.disabled = true;
     const id = setInterval(() => {
