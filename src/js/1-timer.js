@@ -24,8 +24,7 @@ const options = {
     if (selectedDates[0] > options.defaultDate) {
       userSelectedDate = selectedDates[0];
       buttonTime.disabled = false;
-      buttonTime.style.backgroundColor = "#4E75FF";
-      buttonTime.style.color = "#FFFFFF";
+      buttonTime.classList.add("start-active");
     }
     else {
       buttonTime.disabled = true;
@@ -43,9 +42,8 @@ flatpickr('#datetime-picker', options);
 
 const timer = {
   start() {
-    buttonTime.setAttribute("disabled", '');   
-    buttonTime.style.backgroundColor = "#989898";
-    buttonTime.style.color = "#fff";
+    buttonTime.disabled = true; 
+    buttonTime.classList.remove("start-active");
     inputDateTime.disabled = true;
     const id = setInterval(() => {
       const currentDate = new Date();
@@ -55,9 +53,11 @@ const timer = {
       remainingHours.textContent = remainingTime.hours;
       remainingMinutes.textContent = remainingTime.minutes;
       remainingSeconds.textContent = remainingTime.seconds;
-
-      if (remainingTime === currentDate) {
+      console.log(remainingSeconds.textContent === "00");
+      if (remainingDay.textContent === "00" & remainingHours.textContent === "00"
+      & remainingMinutes.textContent === "00" & remainingSeconds.textContent === "00") {
         clearInterval(id);
+        inputDateTime.disabled = false;
       }
     }, 1000)
   }
@@ -77,7 +77,7 @@ function convertMs(ms) {
      const day = hour * 24;
 
      // Remaining days
-     const days = Math.floor(ms / day);
+     const days = pad(Math.floor(ms / day));
      // Remaining hours
      const hours = pad(Math.floor((ms % day) / hour));
      // Remaining minutes

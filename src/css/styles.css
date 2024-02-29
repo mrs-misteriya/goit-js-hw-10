@@ -81,6 +81,17 @@ button{
 }
 
 
+.start-btn{
+background-color: #989898;
+color: #FFFFFF;
+}
+
+
+.start-active{
+background-color: #4E75FF;
+color: #FFFFFF;
+}
+
 
 .form{
   display: flex;
